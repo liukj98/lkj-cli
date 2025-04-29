@@ -67,11 +67,14 @@ program
     loading.start(); // 开始loading
     // 开心下载模版
     downloadGitRepo(projectTemplate, dest, (err) => {
-      loading.stop(); // 结束loading
       if (err) {
-        console.log("创建模版失败", err);
+        loading.fail("创建模版失败：" + err.message); // 失败loading
       } else {
-        console.log("创建模版成功");
+        loading.succeed("创建模版成功!"); // 成功loading
+        // 添加引导信息(每个模版可能都不一样，要按照模版具体情况来)
+        console.log(`\ncd ${projectName}`);
+        console.log("npm i");
+        console.log("npm run dev:dev\n");
       }
     });
   });
