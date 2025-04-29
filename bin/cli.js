@@ -6,7 +6,8 @@ const downloadGitRepo = require("download-git-repo");
 const ora = require("ora"); // loading 动画
 const fs = require("fs-extra");
 const package = require("../package.json");
-const templates = require("./templates");
+// const templates = require("./templates");
+const { getGitReposList } = require("./api"); // 获取用户git仓库列表信息
 
 // 定义当前版本
 program.version(`v${package.version}`);
@@ -18,6 +19,12 @@ program
   .description("创建模版")
   .option("-t, --template <template>", "模版名称")
   .action(async (projectName, options) => {
+    // 0. 获取模版列表
+    const getRepoLoading = ora('获取模版列表...')
+    getRepoLoading.start()
+    const templates = await getGitReposList('liukj98')
+    getRepoLoading.succeed('获取模版列表成功!')
+
     // 1. 从模版列表中找到对应的模版
     let project = templates.find(
       (template) => template.name === options.template
