@@ -4,6 +4,7 @@ const inquirer = require("inquirer"); // 命令行交互
 const path = require("path");
 const downloadGitRepo = require("download-git-repo");
 const ora = require("ora"); // loading 动画
+const fs = require("fs-extra");
 const package = require("../package.json");
 const templates = require("./templates");
 
@@ -50,8 +51,19 @@ program
 
     // 获取目标文件夹
     const dest = path.join(process.cwd(), projectName);
+    // 判断文件夹是否存在，存在就交互询问用户是否覆盖
+    if (fs.existsSync(dest)) {
+      const { force } = await inquirer.prompt({
+        type: "confirm",
+        name: "force",
+        message: "目录已存在，是否覆盖？",
+      });
+      // 如果覆盖就删除文件夹继续往下执行，否的话就退出进程
+      force ? fs.removeSync(dest) : process.exit(1);
+    }
+
     // 5. 开始下载模版
-    const loading = ora("正在下载模版...")
+    const loading = ora("正在下载模版...");
     loading.start(); // 开始loading
     // 开心下载模版
     downloadGitRepo(projectTemplate, dest, (err) => {
