@@ -36,3 +36,7 @@ lkj-cli create <name> [-t|--template]
 ```bash
 lkj-cli create hello-cli -t dumi2-demo
 ```
+
+## 参考
+
+- [自定义脚手架全流程](https://juejin.cn/post/7236021829000446011?searchId=2025042914385891A6F92A610ADC3D2B1B#heading-0)
