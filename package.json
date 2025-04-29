@@ -1,6 +1,6 @@
 {
   "name": "lkj-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "bin": {
     "lkj-cli": "./bin/cli.js"
@@ -11,5 +11,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "commander": "^13.1.0",
+    "inquirer": "^8.2.6"
+  }
 }
